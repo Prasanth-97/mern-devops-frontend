@@ -1,6 +1,22 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+    fetch(`${apiUrl}/`)
+      .then((res) => res.text())
+      .then((data) => console.log("Response from backend:", data))
+      .catch((err) => console.error("Error fetching from backend:", err));
+
+    fetch(`${apiUrl}/health`)
+      .then((res) => res.json())
+      .then((data) => console.log("Health status from backend:", data))
+      .catch((err) => console.error("Error fetching health from backend:", err));
+  }, []);
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
